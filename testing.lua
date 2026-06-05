@@ -610,7 +610,7 @@ local function get_config_name_from_path(file)
 
 	-- elements 
 		local tooltip_sgui = library:create("ScreenGui", {
-			Enabled = false,
+			Enabled = true,
 			Parent = gethui(),
 			Name = "",
 			DisplayOrder = 500, 
@@ -1998,7 +1998,7 @@ end)
 
 		function library:watermark(options) 
 			local cfg = {
-				default = options.text or options.default or os.date('drain.lol | %b %d %Y | %H:%M')
+				default = options.text or options.default or os.date('Kfc.Hook | %b %d %Y | %H:%M')
 			}
 
 			local watermark_outline = library:create("Frame", {
@@ -2051,7 +2051,7 @@ end)
 				FontFace = library.font,
 				TextColor3 = themes.preset.text,
 				BorderColor3 = rgb(0, 0, 0),
-				Text = "  drain.lol | Beta | Aug 29 2024 | 07:29:00  ",
+				Text = "  Kfc.Hook | Beta | Aug 29 2024 | 07:29:00  ",
 				Size = dim2(0, 0, 1, 0),
 				BackgroundTransparency = 1,
 				Position = dim2(0, -1, 0, 1),
@@ -2107,12 +2107,62 @@ end)
 			local props = properties or {}
 			local get_settings = props.get_settings or library.esp_preview_get_settings
 
-			local character = nil
-			if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
-				lp.Character.Archivable = true
-				character = lp.Character:Clone()
-				if character:FindFirstChild("Animate") then character.Animate:Destroy() end
-			end
+local character = nil
+
+local function setup_character()
+    if not lp.Character then return nil end
+    local hrp = lp.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return nil end
+    
+    -- Must set Archivable before cloning
+    lp.Character.Archivable = true
+    local clone = lp.Character:Clone()
+    lp.Character.Archivable = false -- Reset to default
+    
+    -- Remove scripts that interfere with viewport rendering
+    for _, obj in clone:GetDescendants() do
+        if obj:IsA("Script") or obj:IsA("LocalScript") or obj.Name == "Animate" then
+            obj:Destroy()
+        end
+    end
+    
+    -- Disable physics on all parts
+    for _, part in clone:GetDescendants() do
+        if part:IsA("BasePart") then
+            part.Anchored = true
+            part.CanCollide = false
+        end
+    end
+    
+    return clone
+end
+
+-- Try immediately
+character = setup_character()
+
+-- If character not ready, wait for it
+if not character then
+    task.spawn(function()
+        local char = lp.Character or lp.CharacterAdded:Wait()
+        char:WaitForChild("HumanoidRootPart", 10)
+        task.wait(0.1) -- Let accessories load
+        
+        character = setup_character()
+        if character and items.viewportframe then
+            character.Parent = items.viewportframe
+            items.camera.CameraSubject = character
+            
+            -- Setup highlight
+            local hi = Instance.new("Highlight")
+            hi.Parent = character
+            hi.Adornee = character
+            hi.Enabled = false
+            hi.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            cfg.preview_highlight = hi
+        end
+    end)
+end
+
 
 			local items = cfg.items; do 
 				items.viewportframe = library:create( "ViewportFrame" , {
@@ -2151,7 +2201,9 @@ end)
 					task.wait()
 					cfg.rotation = (cfg.rotation or 0) + 0.5
 					if character and character.Parent and character:FindFirstChild("HumanoidRootPart") then
-						character:SetPrimaryPartCFrame(cfr(Vector3.new(0, 1, -6)) * angle(0, math.rad(cfg.rotation), 0))
+						items.viewportframe.CurrentCamera = items.camera
+                        items.camera.CFrame = cfr(vec3(0, 3, 0), vec3(0, 1, -6)) -- Point camera at character position
+
 					end
 				end)
 			end 
