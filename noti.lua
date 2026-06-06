@@ -13,7 +13,7 @@ task.spawn(function()
 
     local notif = Instance.new("Frame")
     notif.Name = "DiscordWatermark"
-    notif.Size = UDim2.fromOffset(210, 50)  -- Changed back to 210
+    notif.Size = UDim2.fromOffset(210, 40)  -- Changed back to 210
     notif.Position = UDim2.fromOffset(-250, 85)
     notif.BackgroundColor3 = Color3.fromRGB(14, 14, 16)
     notif.BorderSizePixel = 0
