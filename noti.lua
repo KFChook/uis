@@ -47,7 +47,7 @@ task.spawn(function()
     title.Parent = notif
 
     local info = Instance.new("TextLabel")
-    info.Text = "Click to copy:discord.gg/sxaNQcJTn"
+    info.Text = "Click to copy: discord.gg/sxaNQcJTn"
     info.Font = Enum.Font.Gotham
     info.TextSize = 14
     info.TextColor3 = Color3.fromRGB(145, 145, 145)
@@ -55,7 +55,7 @@ task.spawn(function()
     info.Position = UDim2.fromOffset(9, 22)
     info.AutomaticSize = Enum.AutomaticSize.XY
     info.TextXAlignment = Enum.TextXAlignment.Left
-    info.TextWrapped = true
+    info.TextWrapped = false
     info.BorderSizePixel = 0
     info.Parent = notif
 
