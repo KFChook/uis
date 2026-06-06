@@ -1,4 +1,4 @@
--- Discord Watermark (appears below KFC notification, no close button)
+
 task.spawn(function()
     local Players = game:GetService("Players")
     local TweenService = game:GetService("TweenService")
@@ -37,7 +37,7 @@ task.spawn(function()
     padding.Parent = notif
 
     local title = Instance.new("TextLabel")
-    title.Text = "KFChook ❯ Discord"
+    title.Text = "KFCHook Discord"
     title.Font = Enum.Font.GothamBold
     title.TextSize = 14
     title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -48,7 +48,7 @@ task.spawn(function()
     title.Parent = notif
 
     local info = Instance.new("TextLabel")
-    info.Text = "Click to copy: discord.gg/kfchook"
+    info.Text = "Click to copy: discord.gg/sxaNQcJTn
     info.Font = Enum.Font.Gotham
     info.TextSize = 14
     info.TextColor3 = Color3.fromRGB(145, 145, 145)
@@ -120,7 +120,7 @@ task.spawn(function()
     clickable.Parent = notif
 
     clickable.MouseButton1Click:Connect(function()
-        copyToClipboard("discord.gg/kfchook")
+        copyToClipboard("discord.gg/sxaNQcJTn")
     end)
 
     task.wait(lifetime)
