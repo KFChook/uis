@@ -13,7 +13,7 @@ task.spawn(function()
 
     local notif = Instance.new("Frame")
     notif.Name = "DiscordWatermark"
-    notif.Size = UDim2.fromOffset(230, 53)
+    notif.Size = UDim2.fromOffset(210, 50)  -- Changed back to 210
     notif.Position = UDim2.fromOffset(-250, 85)
     notif.BackgroundColor3 = Color3.fromRGB(14, 14, 16)
     notif.BorderSizePixel = 0
@@ -55,7 +55,7 @@ task.spawn(function()
     info.Position = UDim2.fromOffset(9, 22)
     info.AutomaticSize = Enum.AutomaticSize.XY
     info.TextXAlignment = Enum.TextXAlignment.Left
-    info.TextWrapped = false
+    info.TextWrapped = true
     info.BorderSizePixel = 0
     info.Parent = notif
 
@@ -78,17 +78,14 @@ task.spawn(function()
 
     local lifetime = 8
 
-    -- slide in from left
     TweenService:Create(notif, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
         Position = UDim2.fromOffset(20, 85)
     }):Play()
 
-    -- progress bar fills over lifetime
     TweenService:Create(bar, TweenInfo.new(lifetime, Enum.EasingStyle.Linear), {
         Size = UDim2.new(1, -16, 0, 5)
     }):Play()
 
-    -- Copy function
     local function copyToClipboard(text)
         if setclipboard then
             setclipboard(text)
@@ -111,7 +108,6 @@ task.spawn(function()
         end
     end
 
-    -- Make entire frame clickable to copy
     local clickable = Instance.new("TextButton")
     clickable.Size = UDim2.new(1, 0, 1, 0)
     clickable.BackgroundTransparency = 1
@@ -124,7 +120,6 @@ task.spawn(function()
 
     task.wait(lifetime)
 
-    -- slide back out to the left
     local slideOut = TweenService:Create(notif, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
         Position = UDim2.fromOffset(-250, 85)
     })
