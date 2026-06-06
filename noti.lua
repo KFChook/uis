@@ -13,7 +13,7 @@ task.spawn(function()
 
     local notif = Instance.new("Frame")
     notif.Name = "DiscordWatermark"
-    notif.Size = UDim2.fromOffset(210, 40)  -- Changed back to 210
+    notif.Size = UDim2.fromOffset(210, 53)  -- Changed back to 210
     notif.Position = UDim2.fromOffset(-250, 85)
     notif.BackgroundColor3 = Color3.fromRGB(14, 14, 16)
     notif.BorderSizePixel = 0
@@ -47,7 +47,7 @@ task.spawn(function()
     title.Parent = notif
 
     local info = Instance.new("TextLabel")
-    info.Text = "Click to copy: discord.gg/sxaNQcJTn"
+    info.Text = "Click to copy  discord.gg/sxaNQcJTn"
     info.Font = Enum.Font.Gotham
     info.TextSize = 14
     info.TextColor3 = Color3.fromRGB(145, 145, 145)
